@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Network_Student_Project</title>
+</head>
+
+<body>
+	<h1>IPv6</h1>
+	<h3>By Jessica Buhler</h3>
+	<h2>Introduction</h2>
+<p>In the 1980's, IPv4 (IP) was released as a standard for the internet for research and military procedures.  It used 32 bits for the addressing, allowing for <strong>4,294,967,296 (2^32)</strong> unique addresses.  In the 1990's, IP was released to the public.  With the significant increase of devices, it became evident that all of the addresses would be used, or exhausted, quickly.  This lead to the development of various protocols to alleviate the issue, including Internet Protocol version 6 (IPv6).</p>
+<h2>IPv6</h2>
+	<p>IPv6 is the latest iteration of the internet protocol and was introduced in 1995.  The header shares similarities with the preceeding IPv4 header, with the primary difference being that IPv6 addresses are 128 bits long, rather than 32.  This allowed for up to <strong>340,282,366,920,938,463,374,607,431,768,211,456 (2^128)</strong> unique addresses.  With an amount of addresses that large, it is unlikely that all of the addresses would be exhausted as was the fear with IPv4.</p>
+	<br>
+	<p>The headers appear as follows:</p>
+	<p><strong>IPv4 (min: 20 octets)</strong></p>
+	<p>| Version (4 bits) | Header Length (4 bits) | Type of Service (8 bits) | Total Length (16 bits) |</p>
+	<p>| Identification (16 bits) | IP Flags (3 bits) | Fragment Offset (13 bits) |</p>
+<p>| Time to Live (8 bits) | Protocol (8 bits) | Header Checksum (16 bits) |</p>
+	<p>| Source Address (32 bits, 64 with subnet) |</p>
+	<p>| Destination Address (32 bits, 64 with subnet) |</p>
+<p><strong>IPv6 (min: 40 octets)</strong></p>
+	<p>| Version (4 bits) | Priority/Traffic Class (8 bits) | Flow Label (20 bits) |</p>
+	<p>| Payload Length (16 bits) | Next Header (8 bits) | Hop Limit (8 bits) |</p>
+	<p>| Source Address (128 bits) |</p>
+	<p>| Destination Address (128 bits) |</p>
+	<br>
+	<p>From the diagram above, it can be seen that some aspects have been carried over, such as the Time to Live from IPv4 becoming the Hop Limit in IPv6.  Other aspects, such as the Type of Service, have been streamlined to be a part of the Traffic Class in order to streamline the packets.  The way addresses are displayed to the user also had to change as the dotted notation of IPv4 would have resulted in very long addresses.  IPv4's address notation converts each octet of the address into a decimel number with periods separating each octect. An example is <strong>11000000 10101000 00000000 00000001</strong> becoming <strong>192.168.0.1</strong>.  To alleviate it, IPv6 uses Hexadecimel for displaying its numbers, and groups them into groups of 4 hex characters separated by colons.  This results in 8 sections with each one representing 2 octets.  IPv6 can also use zero substitution to display a shorter address when there is a long string of zeros through the use of <strong>::</strong>.  This substitution can only be performed once per address.  Thus, an IPv6 address can look like <strong>2001:db8::ff00:0042:8329</strong></p>
+	<p>A slight issue that arrises when using colons for notation is that port numbers also use colons to delineate where the port is.  For instance, an address of <strong>8.8.4.4:53</strong> will have traffic go through port 53.  To avoid this issue, square brackets can be used around an address in order to indicate where the address is.  Going back to our previous example, an IPv6 address in a web browser going through a specific port may look like this: <strong>http://[2001:db8::ff00:0042:8329]:53</strong>.</p>
+	<p>Just as IPv4 has a loopback address of <strong>127.0.0.1</strong>, IPv6 has a loopback address of <strong>::1</strong>.  While IPv4 has variable subnets, IPv6 subnets are set to 64 bits.  That results in 2^64 bits for the network and 2^64 bits for the host. IPv6 also supports Unicast, Multicast, and Anycast, but not Broadcast like IPv4.</p>
+	<p>IPv6 also supports a private network system similar to IPv4's private addressing through <strong>Link-Local Addresses</strong>.  These addresses only allow for communication over a subnetwork that a host device is connected to, also referred to as a local link.  These addresses usually begin with <strong>fe80::</strong>.  Devices get these addresses via Local Address Autoconfiguration, which is similar to IPv4's Automatic Private IP Assignment (APIPA), and via Stateless Address Autoconfiguration (SLAAC), which performs the same function of IPv4's Dynamic Host Configuration Protocol (DHCP).  SLAAC is stateless because there are 2^64 host addresses, so the odds of two devices on the same subnetwork chosing the exact same addres is so statistically unlikely that it can be considered practically impossible.  As for the chance, it is  1 in 340,282,366,920,938,463,374,607,431,768,211,456 ((2^64) * (2^64)).</p>
+	<h2>Why is IPv6 Not Commonly Used?</h2>
+	<p>With the depletion of IPv4 addresses being a threat in the 1990's, one would think that everyone would have switched over to IPv6.  This exhaustion becomes even more of a threat with the consideration of smart devices.  The reason as for why the switch has not happened is because <strong>IPv6 is not directly backwards compatible with IPv4</strong>.  There are protocols that allow for IPv6 packets to be encapsulate into IPv4 packets (6to4) and IPv4 packets to be encapsulated into IPv6 packets (4to6).  These two protocols have had issues with reliability and performance, so both of these standards were deprecated in 2015.</p>
+	<p>What allowed for IPv6 to work in IPv4 networks was the protocol that solved the IP Exhaustion problem: <strong>Network Address Translation (NAT).</strong>  Introduced in 1994, NAT was originally intended as a short-term solution, but it is still in use to this day.  The manner in which it works is by hiding an entire IP address space behind a single IP address in another space.  This process is called <strong>IP Masquerading</strong>.  In 1996, port-address translation was introduced, allowing the translation to include port numbers.  The translation can also be applied to IPv6 addresses through <strong>NAT64</strong>, allowing for IPv6 addresses to masquerade as IPv4 addresses.  Thanks to NAT, IPv4 is still the primary Internet Protocol in use today, and it is not likely that IPv6 will be used in consumer networking until there is some calamity with the current system.</p>
+	<br>
+	<h2>References</h2>
+	<p>Hinden, R., &amp; Deering, S. (1970, February 1). IP version 6 addressing architecture. RFC Editor. https://www.rfc-editor.org/rfc/rfc4291</p>
+	<p>Troan, O., &amp; Carpenter, B. (1970, May 1). Deprecating the anycast prefix for 6to4 relay routers. RFC Editor. https://www.rfc-editor.org/rfc/rfc7526 </p>
+	<p>Egevang, K., &amp; Francis, P. (1994, May 1). The IP Network Address Translator (NAT). RFC Editor. https://www.rfc-editor.org/rfc/rfc1631 </p>
+	<h2>Addendum</h2>
+	<p>I apologize for the delay in turning this in.  Life got in my way, and I failed to get it completed until now.  I know I will be unable to get full points but any points are better than none.  Thank you.</p>
+</body>
+<style>
+	body{
+	margin: 5em
+	}
+</style>
+</html>
